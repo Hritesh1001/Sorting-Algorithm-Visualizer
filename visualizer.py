@@ -52,3 +52,30 @@ def draw(draw_info):
     draw_info.window.fill(draw_info.BG_COLOR)
     draw_lst(draw_info)
     pygame.display.update()
+    
+def main():
+    run = True
+    clock = pygame.time.Clock()
+    
+    lst = generate_lst(50, 0, 100)
+    draw_info = GlobalVariable(800, 600, lst)
+    
+    while run:
+        clock.tick(60)
+        draw(draw_info)
+        
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+            
+            if event.type != pygame.KEYDOWN:
+                continue
+            
+            if event.key == pygame.K_r:
+                lst = generate_lst(50, 0, 100)
+                draw_info.set_list(lst)
+                
+    pygame.quit()
+    
+if __name__ == "__main__":
+    main()
