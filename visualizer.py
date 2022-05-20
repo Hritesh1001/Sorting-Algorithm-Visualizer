@@ -47,3 +47,8 @@ def draw_lst(draw_info):
         y = draw_info.height - (val - draw_info.min_val) * draw_info.block_height
         color = draw_info.GRADIENT[i % 3]
         pygame.draw.rect(draw_info.window, color, (x, y, draw_info.block_width, draw_info.height))
+        
+def draw(draw_info):
+    draw_info.window.fill(draw_info.BG_COLOR)
+    draw_lst(draw_info)
+    pygame.display.update()
