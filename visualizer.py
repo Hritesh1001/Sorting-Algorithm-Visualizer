@@ -42,6 +42,18 @@ def generate_lst(n, min_val, max_val):
         lst.append(val)
     return lst
 
+def bubble_sort(draw_info, ascending = True):
+    lst = draw_info.lst
+    for i in range(len(lst) - 1):
+        for j in range(len(lst) - i - 1):
+            num1 = lst[j]
+            num2 = lst[j + 1]
+            if (num1 > num2 and ascending == True) or (num1 < num2 and ascending == False):
+                lst[j], lst[j + 1] = lst[j + 1], lst[j]
+                draw_lst(draw_info, {j : draw_info.GREEN, j + 1 : draw_info.RED}, True)
+                yield True
+    return lst
+
 def draw_lst(draw_info):
     lst = draw_info.lst
     for i, val in enumerate(lst):
@@ -54,6 +66,8 @@ def draw(draw_info):
     draw_info.window.fill(draw_info.BG_COLOR)
     controls = draw_info.FONT.render("R - Reset | SPACE - Start | A - Ascending | D - Descending", 1, draw_info.BLACK)
     draw_info.window.blit(controls, (draw_info.width / 2 - controls.get_width() / 2, 5))
+    sort = draw_info.FONT.render("I - Insertion Sort | B - Bubble Sort", 1, draw_info.BLACK)
+    draw_info.window.blit(sort, (draw_info.width / 2 - sort.get_width() / 2, 35))
     draw_lst(draw_info)
     pygame.display.update()
     
