@@ -16,6 +16,8 @@ class GlobalVariable:
 		(160, 160, 160),
 		(192, 192, 192)
 	]
+    FONT = pygame.font.SysFont('Visualizer', 30)
+    L_FONT = pygame.font.SysFont('Visualizer', 40)
     
     def __init__(self, width, height, lst):
         self.width = width
@@ -50,6 +52,8 @@ def draw_lst(draw_info):
         
 def draw(draw_info):
     draw_info.window.fill(draw_info.BG_COLOR)
+    controls = draw_info.FONT.render("R - Reset | SPACE - Start | A - Ascending | D - Descending", 1, draw_info.BLACK)
+    draw_info.window.blit(controls, (draw_info.width / 2 - controls.get_width() / 2, 5))
     draw_lst(draw_info)
     pygame.display.update()
     
@@ -59,6 +63,8 @@ def main():
     
     lst = generate_lst(50, 0, 100)
     draw_info = GlobalVariable(800, 600, lst)
+    sorting = False
+    ascending = True
     
     while run:
         clock.tick(60)
@@ -74,6 +80,12 @@ def main():
             if event.key == pygame.K_r:
                 lst = generate_lst(50, 0, 100)
                 draw_info.set_list(lst)
+            elif event.key == pygame.K_SPACE and sorting == False:
+                sorting = True
+            elif event.key == pygame.K_a and not sorting:
+                ascending = True
+            elif event.key == pygame.K_d and not sorting:
+                ascending = False
                 
     pygame.quit()
     
