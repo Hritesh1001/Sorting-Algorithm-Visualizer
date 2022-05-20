@@ -39,3 +39,11 @@ def generate_lst(n, min_val, max_val):
         val = random.randint(min_val, max_val)
         lst.append(val)
     return lst
+
+def draw_lst(draw_info):
+    lst = draw_info.lst
+    for i, val in enumerate(lst):
+        x = draw_info.start_x + i * draw_info.block_width
+        y = draw_info.height - (val - draw_info.min_val) * draw_info.block_height
+        color = draw_info.GRADIENT[i % 3]
+        pygame.draw.rect(draw_info.window, color, (x, y, draw_info.block_width, draw_info.height))
