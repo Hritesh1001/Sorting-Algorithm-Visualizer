@@ -193,10 +193,10 @@ def partition(draw_info, l, h, ascending):
             if lst[j] <= x:
                 i = i + 1
                 draw_lst(draw_info, {i : draw_info.RED, j : draw_info.GREEN}, True)
-                time.sleep(0.05)
+                time.sleep(0.02)
                 lst[i], lst[j] = lst[j], lst[i]
         draw_lst(draw_info, {i + 1 : draw_info.RED, h : draw_info.GREEN}, True)
-        time.sleep(0.05)
+        time.sleep(0.02)
         lst[i + 1], lst[h] = lst[h], lst[i + 1]
         return (i + 1)
     else:
@@ -204,12 +204,34 @@ def partition(draw_info, l, h, ascending):
             if lst[j] >= x:
                 i = i + 1
                 draw_lst(draw_info, {i : draw_info.RED, j : draw_info.GREEN}, True)
-                time.sleep(0.05)
+                time.sleep(0.02)
                 lst[i], lst[j] = lst[j], lst[i]
         draw_lst(draw_info, {i + 1 : draw_info.RED, h : draw_info.GREEN}, True)
-        time.sleep(0.05)
+        time.sleep(0.02)
         lst[i + 1], lst[h] = lst[h], lst[i + 1]
         return (i + 1)
+    
+def selection_sort(draw_info, ascending = True):
+    lst = draw_info.lst
+    if ascending:
+        for i in range(len(lst)):
+            min_idx = i
+            for j in range(i+1, len(lst)):
+                if lst[min_idx] > lst[j]:
+                    min_idx = j
+                    draw_lst(draw_info, {i : draw_info.RED, min_idx : draw_info.GREEN}, True)
+                    yield True
+            lst[i], lst[min_idx] = lst[min_idx], lst[i]
+    else:
+        for i in range(len(lst)):
+            max_idx = i
+            for j in range(i+1, len(lst)):
+                if lst[max_idx] < lst[j]:
+                    max_idx = j
+                    draw_lst(draw_info, {i : draw_info.RED, max_idx : draw_info.GREEN}, True)
+                    yield True
+            lst[i], lst[max_idx] = lst[max_idx], lst[i]
+    return lst
 
 def draw_lst(draw_info, cur_block = {}, clear_bg = False):
     lst = draw_info.lst
@@ -237,7 +259,7 @@ def draw(draw_info, algo_name, ascending):
     controls = draw_info.FONT.render("R - Reset | SPACE - Start | A - Ascending | D - Descending", 1, draw_info.BLACK)
     draw_info.window.blit(controls, (draw_info.width / 2 - controls.get_width() / 2, 40))
     
-    sort = draw_info.FONT.render("I - Insertion Sort | B - Bubble Sort | M - Merge Sort | Q - Quick Sort", 1, draw_info.BLACK)
+    sort = draw_info.FONT.render("I - Insertion Sort | B - Bubble Sort | M - Merge Sort | Q - Quick Sort | S - Selection Sort", 1, draw_info.BLACK)
     draw_info.window.blit(sort, (draw_info.width / 2 - sort.get_width() / 2, 65))
     
     draw_lst(draw_info)
@@ -247,8 +269,8 @@ def main():
     run = True
     clock = pygame.time.Clock()
     
-    lst = generate_lst(50, 0, 100)
-    draw_info = GlobalVariable(800, 600, lst)
+    lst = generate_lst(60, 0, 100)
+    draw_info = GlobalVariable(900, 600, lst)
     sorting = False
     ascending = True
     
@@ -295,6 +317,9 @@ def main():
             elif event.key == pygame.K_q and not sorting:
                 sorting_algo = quick_sort
                 sorting_algo_name = "Quick Sort"
+            elif event.key == pygame.K_s and not sorting:
+                sorting_algo = selection_sort
+                sorting_algo_name = "Selection Sort"
                 
     pygame.quit()
     
