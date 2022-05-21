@@ -1,0 +1,12 @@
+def bubble_sort(draw_info, ascending = True):
+    lst = draw_info.lst
+    for i in range(len(lst) - 1):
+        for j in range(len(lst) - i - 1):
+            num1 = lst[j]
+            num2 = lst[j + 1]
+            if (num1 > num2 and ascending == True) or (num1 < num2 and ascending == False):
+                lst[j], lst[j + 1] = lst[j + 1], lst[j]
+                draw_lst(draw_info, {j : draw_info.GREEN, j + 1 : draw_info.RED}, True)
+                yield True
+                
+    return lst

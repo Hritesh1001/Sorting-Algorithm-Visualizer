@@ -1,0 +1,17 @@
+# INSERTION SORT
+def insertion_sort(draw_info, ascending = True):
+    lst = draw_info.lst
+    for i in range(1, len(lst)):
+        cur = lst[i]
+        while True:
+            ascending_sort = i > 0 and lst[i - 1] > cur and ascending
+            descending_sort = i > 0 and lst[i - 1] < cur and not ascending
+            if not ascending_sort and not descending_sort:
+                break
+            lst[i] = lst[i - 1]
+            i = i - 1
+            lst[i] = cur
+            draw_lst(draw_info, {i : draw_info.RED, i - 1 : draw_info.GREEN}, True)
+            yield True
+            
+    return lst

@@ -75,9 +75,10 @@ def bubble_sort(draw_info, ascending = True):
                 lst[j], lst[j + 1] = lst[j + 1], lst[j]
                 draw_lst(draw_info, {j : draw_info.GREEN, j + 1 : draw_info.RED}, True)
                 yield True
+                
     return lst
 
-#INSERTION SORT
+# INSERTION SORT
 def insertion_sort(draw_info, ascending = True):
     lst = draw_info.lst
     for i in range(1, len(lst)):
@@ -92,9 +93,10 @@ def insertion_sort(draw_info, ascending = True):
             lst[i] = cur
             draw_lst(draw_info, {i : draw_info.RED, i - 1 : draw_info.GREEN}, True)
             yield True
+            
     return lst
 
-#MERGE SORT
+# MERGE SORT
 def merge_sort(draw_info, ascending = True):
     lst = draw_info.lst
     width = 1
@@ -119,7 +121,7 @@ def merge_sort(draw_info, ascending = True):
         
     return lst
 
-#MERGE Function is also a part of MERGE SORT
+# MERGE Function is also a part of MERGE SORT
 def merge(lst, l, m, r, ascending = True):
     n1 = m - l + 1
     n2 = r - m
@@ -215,7 +217,7 @@ def quick_sort(draw_info, ascending = True):
             top = top + 1
             stack[top] = h
             
-#PARTITION Function is also a part of QUICK SORT
+# PARTITION Function is also a part of QUICK SORT
 def partition(draw_info, l, h, ascending):
     lst = draw_info.lst
     i = (l - 1)
