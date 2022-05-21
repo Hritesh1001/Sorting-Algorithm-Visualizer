@@ -2,6 +2,7 @@ from turtle import update
 import pygame
 import random
 import math
+import time
 pygame.init()
 
 class GlobalVariable:
@@ -71,7 +72,7 @@ def insertion_sort(draw_info, ascending = True):
             yield True
     return lst
 
-def mergeSort(draw_info, ascending = True):
+def merge_sort(draw_info, ascending = True):
     lst = draw_info.lst
     width = 1
     n = len(lst)
@@ -142,6 +143,73 @@ def merge(lst, l, m, r, ascending = True):
             lst[k] = R[j]
             j += 1
             k += 1
+            
+def quick_sort(draw_info, ascending = True):
+    lst = draw_info.lst
+    l = 0
+    h = len(lst) - 1
+    size = h - l + 1
+    stack = [0] * (size)
+    top = -1
+    
+    top = top + 1
+    stack[top] = l
+    
+    top = top + 1
+    stack[top] = h
+    
+    while top >= 0:
+        h = stack[top]
+        top = top - 1
+        l = stack[top]
+        top = top - 1
+        draw_lst(draw_info, {l : draw_info.RED, h : draw_info.GREEN}, True)
+        yield True
+        draw_lst(draw_info, {l : draw_info.RED, h : draw_info.GREEN}, True)
+        yield True
+        p = partition(draw_info, l, h, ascending)
+        draw_lst(draw_info, {l : draw_info.RED, h : draw_info.GREEN}, True)
+        yield True
+        draw_lst(draw_info, {l : draw_info.RED, h : draw_info.GREEN}, True)
+        yield True
+        if p - 1 > l:
+            top = top + 1
+            stack[top] = l
+            top = top + 1
+            stack[top] = p - 1
+            
+        if p + 1 < h:
+            top = top + 1
+            stack[top] = p + 1
+            top = top + 1
+            stack[top] = h
+
+def partition(draw_info, l, h, ascending):
+    lst = draw_info.lst
+    i = (l - 1)
+    x = lst[h]
+    if ascending:
+        for j in range(l, h):
+            if lst[j] <= x:
+                i = i + 1
+                draw_lst(draw_info, {i : draw_info.RED, j : draw_info.GREEN}, True)
+                time.sleep(0.05)
+                lst[i], lst[j] = lst[j], lst[i]
+        draw_lst(draw_info, {i + 1 : draw_info.RED, h : draw_info.GREEN}, True)
+        time.sleep(0.05)
+        lst[i + 1], lst[h] = lst[h], lst[i + 1]
+        return (i + 1)
+    else:
+        for j in range(l, h):
+            if lst[j] >= x:
+                i = i + 1
+                draw_lst(draw_info, {i : draw_info.RED, j : draw_info.GREEN}, True)
+                time.sleep(0.05)
+                lst[i], lst[j] = lst[j], lst[i]
+        draw_lst(draw_info, {i + 1 : draw_info.RED, h : draw_info.GREEN}, True)
+        time.sleep(0.05)
+        lst[i + 1], lst[h] = lst[h], lst[i + 1]
+        return (i + 1)
 
 def draw_lst(draw_info, cur_block = {}, clear_bg = False):
     lst = draw_info.lst
@@ -169,7 +237,7 @@ def draw(draw_info, algo_name, ascending):
     controls = draw_info.FONT.render("R - Reset | SPACE - Start | A - Ascending | D - Descending", 1, draw_info.BLACK)
     draw_info.window.blit(controls, (draw_info.width / 2 - controls.get_width() / 2, 40))
     
-    sort = draw_info.FONT.render("I - Insertion Sort | B - Bubble Sort", 1, draw_info.BLACK)
+    sort = draw_info.FONT.render("I - Insertion Sort | B - Bubble Sort | M - Merge Sort | Q - Quick Sort", 1, draw_info.BLACK)
     draw_info.window.blit(sort, (draw_info.width / 2 - sort.get_width() / 2, 65))
     
     draw_lst(draw_info)
@@ -222,8 +290,11 @@ def main():
                 sorting_algo = bubble_sort
                 sorting_algo_name = "Bubble Sort"
             elif event.key == pygame.K_m and not sorting:
-                sorting_algo = mergeSort
+                sorting_algo = merge_sort
                 sorting_algo_name = "Merge Sort"
+            elif event.key == pygame.K_q and not sorting:
+                sorting_algo = quick_sort
+                sorting_algo_name = "Quick Sort"
                 
     pygame.quit()
     
