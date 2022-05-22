@@ -356,6 +356,7 @@ def main():
             
             # If R button is pressed, reset the data of list
             if event.key == pygame.K_r:
+		sorting = False
                 lst = generate_lst(60, 1, 100)
                 draw_info.set_list(lst)
                 
