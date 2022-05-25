@@ -19,7 +19,6 @@ For Example : To implement Merge Sort in Descending order : Press 'M' then Press
 - Descending
 
 ## How To Run ❓
-#### Prerequisite - Install PyGame. In the Command Prompt, run `pip install pygame` command to install PyGame.
 **Respected Viewer, this application is completely safe for your computer and does not contains anything that could cause damage to your system in any of the ways.
 I had to tell you this because when you will download or run the application(.exe file) on your system, you might get some warnings. It is a kind request to ignore all of them.**
 
